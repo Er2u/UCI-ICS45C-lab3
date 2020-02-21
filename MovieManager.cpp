@@ -4,8 +4,7 @@
 
 
 #include "MovieManager.h"
-#include <string>
-using namespace std;
+
 
 //Default constructor of MovieManager.
 MovieManager::MovieManager(){
@@ -124,10 +123,10 @@ void MovieManager::printInventory(){
 void MovieManager::run(){
     cout << "Welcome to Movie Rental Kiosk!\n";
     MovieManagerUI sample = MovieManagerUI();
+    sample.printMenu();
     string command = "BEGIN";
     command = sample.getCommand();
     command = sample.toUpper(command);
-    sample.printMenu();
     while (command != "Q"){
         if (command == "Q"){
             break;
@@ -139,6 +138,8 @@ void MovieManager::run(){
                 theName = sample.getMovieName();
                 Movies obj1 = Movies(theCode, theName);
                 addMovie(obj1);
+                command = sample.getCommand();
+                command = sample.toUpper(command);
             }
             catch(MovieLimitException& e1){
                 cout << "MovieLimitException: The movie list already has the maximum number(20) of movies, you cannot add more movies." << endl;
@@ -165,6 +166,8 @@ void MovieManager::run(){
             try{
                 string theCode = sample.getMovieCode();
                 discontinueMovie(theCode);
+                command = sample.getCommand();
+                command = sample.toUpper(command);
             }
             catch(MovieNotFoundException& e1){
                 cout << "MovieNotFoundException: Cannot find the movie that you enter." << endl;
@@ -197,6 +200,8 @@ void MovieManager::run(){
                 theLast = sample.getRenterLastName();
                 Renter obj2 = Renter(theID, theFirst, theLast);
                 rentMovie(theCode, obj2);
+                command = sample.getCommand();
+                command = sample.toUpper(command);
             }
             catch(MovieNotFoundException& e1){
                 cout << "MovieNotFoundException: Cannot find the movie that you enter." << endl;
@@ -238,6 +243,8 @@ void MovieManager::run(){
                 theCode = sample.getMovieCode();
                 theID = sample.getRenterID();
                 returnRental(theID, theCode);
+                command = sample.getCommand();
+                command = sample.toUpper(command);
             }
             catch(MovieNotFoundException& e1){
                 cout << "MovieNotFoundException: Cannot find the movie that you enter." << endl;
@@ -262,6 +269,8 @@ void MovieManager::run(){
         
         else if (command == "P"){
             printInventory();
+            command = sample.getCommand();
+            command = sample.toUpper(command);
         }
     }
 }
